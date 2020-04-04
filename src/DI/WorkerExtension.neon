@@ -1,0 +1,2 @@
+services:
+	- MartenB\Worker\Jobs\OrmJob

@@ -1,0 +1,38 @@
+{
+  "name": "martenb/worker",
+  "description": "Simple worker for doing hard jobs",
+  "type": "library",
+  "require": {
+    "php": ">=7.1",
+    "nette/php-generator": "^2.4 || ^3.0",
+    "nette/utils": "^2.4 || ^3.0",
+    "symfony/console": "^3.3 || ^4.0 || ^5.0"
+  },
+  "require-dev": {
+    "nette/di": "^2.4 || ^3.0",
+    "ninjify/coding-standard": "^0.10",
+    "php-parallel-lint/php-console-highlighter": "^0.4",
+    "php-parallel-lint/php-parallel-lint": "^1.2",
+    "phpstan/phpstan": "^0.12",
+    "phpstan/phpstan-deprecation-rules": "^0.12",
+    "phpstan/phpstan-nette": "^0.12",
+    "phpstan/phpstan-strict-rules": "^0.12"
+  },
+  "autoload": {
+    "psr-4": {
+      "MartenB\\Worker\\": "src/"
+    }
+  },
+  "scripts": {
+    "cs": [
+      "parallel-lint -e php,phpt --blame src",
+      "phpcs --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --colors -nsp src"
+    ],
+    "cs-fix": [
+      "phpcbf --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --colors -nsp src"
+    ],
+    "phpstan": [
+      "phpstan analyse -l max -c phpstan.neon src"
+    ]
+  }
+}
