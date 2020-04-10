@@ -1,6 +1,6 @@
 {
   "name": "adbros/worker",
-  "description": "Simple worker for doing hard jobs",
+  "description": "Simple interactive worker for doing hard jobs.",
   "type": "library",
   "require": {
     "php": ">=7.1",

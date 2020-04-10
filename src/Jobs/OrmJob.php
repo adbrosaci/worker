@@ -26,7 +26,7 @@ class OrmJob extends AbstractJob
 		parent::configureCommand($command);
 
 		$command
-			->setDescription('Generate entity, repository and mapper for nextras/orm package.')
+			->setDescription('Generate model for nextras/orm package.')
 			->addArgument('entity', InputArgument::OPTIONAL, 'Entity name')
 			->addArgument('repository', InputArgument::OPTIONAL, 'Repository and mapper name')
 			->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Model namespace');
