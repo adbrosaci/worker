@@ -1,2 +1,3 @@
 services:
 	- Adbros\Worker\Jobs\OrmJob
+	- Adbros\Worker\Jobs\PresenterJob
