@@ -1,5 +1,5 @@
 # Worker
-Simple interactive worker for doing hard jobs.
+Simple interactive worker for doing hard jobs. Inspired by [symfony/maker-bundle](https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html)
 
 ## Installation
 ```shell
@@ -19,6 +19,9 @@ extensions:
 php bin/console worker:orm [options] [--] [<entity> [<repository>]]
 php bin/console worker:presenter [options] [--] [<name>]
 ```
+
+## Create your own jobs
+Just create a class that implements ```Adbros\Worker\IJob``` and register it to DI container. That's it.
 
 ## Examples
 
