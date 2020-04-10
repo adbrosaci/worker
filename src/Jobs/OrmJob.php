@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace MartenB\Worker\Jobs;
+namespace Adbros\Worker\Jobs;
 
 use Nette\PhpGenerator\PhpFile;
 use Nette\Utils\Strings;

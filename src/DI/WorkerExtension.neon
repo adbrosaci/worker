@@ -1,2 +1,2 @@
 services:
-	- MartenB\Worker\Jobs\OrmJob
+	- Adbros\Worker\Jobs\OrmJob

@@ -1,5 +1,5 @@
 {
-  "name": "martenb/worker",
+  "name": "adbros/worker",
   "description": "Simple worker for doing hard jobs",
   "type": "library",
   "require": {
@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "MartenB\\Worker\\": "src/"
+      "Adbros\\Worker\\": "src/"
     }
   },
   "scripts": {

@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace MartenB\Worker\Jobs;
+namespace Adbros\Worker\Jobs;
 
-use MartenB\Worker\FileManager;
-use MartenB\Worker\IJob;
+use Adbros\Worker\FileManager;
+use Adbros\Worker\IJob;
 use Nette\Utils\Strings;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

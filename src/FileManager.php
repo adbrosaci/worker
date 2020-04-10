@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace MartenB\Worker;
+namespace Adbros\Worker;
 
 use Nette\SmartObject;
 

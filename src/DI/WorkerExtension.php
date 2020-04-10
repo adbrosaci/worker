@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace MartenB\Worker\DI;
+namespace Adbros\Worker\DI;
 
-use MartenB\Worker\Command\WorkerCommand;
-use MartenB\Worker\FileManager;
-use MartenB\Worker\IJob;
+use Adbros\Worker\Command\WorkerCommand;
+use Adbros\Worker\FileManager;
+use Adbros\Worker\IJob;
 use Nette\DI\CompilerExtension;
 use Symfony\Component\Console\ConsoleEvents;
 
