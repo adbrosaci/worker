@@ -1,7 +1,14 @@
 {
   "name": "adbros/worker",
   "description": "Simple interactive worker for doing hard jobs.",
+  "keywords": [
+    "generator",
+    "nette",
+    "nextras/orm",
+    "presenter"
+  ],
   "type": "library",
+  "license": "MIT",
   "require": {
     "php": ">=7.1",
     "nette/php-generator": "^2.4 || ^3.0",
