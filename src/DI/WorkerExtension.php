@@ -18,14 +18,22 @@ class WorkerExtension extends CompilerExtension
 		$container->addDefinition($this->prefix('fileManager'))
 			->setFactory(FileManager::class, [$container->parameters['appDir']]);
 
-		$this->compiler->loadDefinitionsFromConfig(
-			$this->loadFromFile(__DIR__ . '/WorkerExtension.neon')['services']
-		);
+		if (method_exists($this->compiler, 'loadDefinitionsFromConfig')) {
+			$this->compiler->loadDefinitionsFromConfig(
+				$this->loadFromFile(__DIR__ . '/WorkerExtension.neon')['services']
+			);
+		} else {
+			$this->compiler->loadDefinitions(
+				$container,
+				$this->loadFromFile(__DIR__ . '/WorkerExtension.neon')['services'],
+				$this->name
+			);
+		}
 
-		foreach ($container->findByType(IJob::class) as $job) {
-			$container->addDefinition($this->prefix('jobs.' . $job->getName()))
+		foreach ($container->findByType(IJob::class) as $key => $job) {
+			$container->addDefinition($this->prefix('jobs.' . $key))
 				->setFactory(WorkerCommand::class, [$job])
-				->addTag(ConsoleEvents::COMMAND, ['name' => $job->getType()::getCommandName()]);
+				->addTag(ConsoleEvents::COMMAND, ['name' => $job->getClass()::getCommandName()]);
 		}
 	}
 
