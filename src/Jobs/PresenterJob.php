@@ -101,7 +101,11 @@ class PresenterJob extends AbstractJob
 
 		file_put_contents($filename, (string) $file);
 
+		$io->text(sprintf('File %s created.', $filename));
+
 		file_put_contents($latteFilename, '{block content}' . PHP_EOL);
+
+		$io->text(sprintf('File %s created.', $latteFilename));
 
 		$io->success('Done.');
 

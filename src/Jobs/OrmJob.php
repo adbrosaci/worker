@@ -91,7 +91,9 @@ class OrmJob extends AbstractJob
 			->setExtends('Nextras\\Orm\\Entity\\Entity')
 			->addComment('@property int $id {primary}');
 
-		file_put_contents($directory . '/' . $input->getArgument('entity') . '.php', (string) $file);
+		file_put_contents(($filename = $directory . '/' . $input->getArgument('entity') . '.php'), (string) $file);
+
+		$io->text(sprintf('File %s created.', $filename));
 
 		$file = new PhpFile();
 
@@ -110,7 +112,9 @@ class OrmJob extends AbstractJob
 			->addComment('@return string[]')
 			->setBody('return [' . $input->getArgument('entity') . '::class];');
 
-		file_put_contents($directory . '/' . $input->getArgument('repository') . 'Repository.php', (string) $file);
+		file_put_contents(($filename = $directory . '/' . $input->getArgument('repository') . 'Repository.php'), (string) $file);
+
+		$io->text(sprintf('File %s created.', $filename));
 
 		$file = new PhpFile();
 
@@ -124,7 +128,9 @@ class OrmJob extends AbstractJob
 			->addClass($input->getArgument('repository') . 'Mapper')
 			->setExtends('Nextras\\Orm\\Mapper\\Mapper');
 
-		file_put_contents($directory . '/' . $input->getArgument('repository') . 'Mapper.php', (string) $file);
+		file_put_contents(($filename = $directory . '/' . $input->getArgument('repository') . 'Mapper.php'), (string) $file);
+
+		$io->text(sprintf('File %s created.', $filename));
 
 		$io->success('Done.');
 

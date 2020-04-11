@@ -111,6 +111,8 @@ class CommandJob extends AbstractJob
 
 		file_put_contents($filename, (string) $file);
 
+		$io->text(sprintf('File %s created.', $filename));
+
 		$io->success('Done.');
 
 		return 0;
