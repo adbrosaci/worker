@@ -26,7 +26,7 @@ class PresenterJob extends AbstractJob
 		parent::configureCommand($command);
 
 		$command
-			->setDescription('Generate Nette presenter.')
+			->setDescription('Generate Nette presenter and default template.')
 			->addArgument('name', InputArgument::OPTIONAL, 'Presenter name')
 			->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Presenter namespace');
 	}
@@ -75,6 +75,18 @@ class PresenterJob extends AbstractJob
 			throw new RuntimeException(sprintf('File %s already exists!', $filename));
 		}
 
+		$latteDirectory = $directory . '/templates/' . $input->getArgument('name');
+
+		if (!file_exists($latteDirectory)) {
+			mkdir($latteDirectory, 0777, true);
+		}
+
+		$latteFilename = $latteDirectory .  '/default.latte';
+
+		if (file_exists($latteFilename)) {
+			throw new RuntimeException(sprintf('File %s already exists!', $latteFilename));
+		}
+
 		$file = new PhpFile();
 
 		if (method_exists($file, 'setStrictTypes')) {
@@ -87,6 +99,8 @@ class PresenterJob extends AbstractJob
 			->setExtends('Nette\\Application\\UI\\Presenter');
 
 		file_put_contents($filename, (string) $file);
+
+		file_put_contents($latteFilename, '{block content}' . PHP_EOL);
 
 		$io->success('Done.');
 
