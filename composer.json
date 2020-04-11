@@ -27,6 +27,9 @@
     "phpstan/phpstan-nette": "^0.12",
     "phpstan/phpstan-strict-rules": "^0.12"
   },
+  "suggest": {
+    "contributte/console": "Best minimal console (symfony/console) to Nette Framework"
+  },
   "autoload": {
     "psr-4": {
       "Adbros\\Worker\\": "src/"
