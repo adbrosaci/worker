@@ -81,7 +81,7 @@ class PresenterJob extends AbstractJob
 			mkdir($latteDirectory, 0777, true);
 		}
 
-		$latteFilename = $latteDirectory .  '/default.latte';
+		$latteFilename = $latteDirectory . '/default.latte';
 
 		if (file_exists($latteFilename)) {
 			throw new RuntimeException(sprintf('File %s already exists!', $latteFilename));
