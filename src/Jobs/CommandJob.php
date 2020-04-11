@@ -36,7 +36,7 @@ class CommandJob extends AbstractJob
 		parent::interact($input, $io, $command);
 
 		if ($input->getArgument('name') === null) {
-			$entity = $io->ask('Enter command name', null, function (?string $answer): string {
+			$name = $io->ask('Enter command name', null, function (?string $answer): string {
 				if ($answer === null) {
 					throw new InvalidArgumentException('Please, enter command name.');
 				}
@@ -44,7 +44,7 @@ class CommandJob extends AbstractJob
 				return $answer;
 			});
 
-			$input->setArgument('name', $entity);
+			$input->setArgument('name', $name);
 		}
 
 		if ($input->getOption('namespace') === null) {

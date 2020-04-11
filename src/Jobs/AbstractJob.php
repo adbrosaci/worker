@@ -24,7 +24,6 @@ abstract class AbstractJob implements IJob
 	public function configureCommand(Command $command): void
 	{
 		$command
-			->setDescription('Generate entity, repository and mapper for nextras/orm package.')
 			->addOption('root-directory', 'rdir', InputOption::VALUE_OPTIONAL, 'Namespace root directory')
 			->addOption('root-namespace', 'rns', InputOption::VALUE_OPTIONAL, 'PSR-4 namespace root');
 	}
