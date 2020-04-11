@@ -16,7 +16,13 @@ extensions:
 ## Usage
 
 ```shell
+# Generate command for symfony/command package
+php bin/console worker:command [options] [--] [<name>]
+
+# Generate model for nextras/orm package
 php bin/console worker:orm [options] [--] [<entity> [<repository>]]
+
+# Generate presenter and default template
 php bin/console worker:presenter [options] [--] [<name>]
 ```
 

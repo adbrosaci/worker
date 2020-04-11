@@ -13,12 +13,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class PresenterJob extends AbstractJob
+class CommandJob extends AbstractJob
 {
 
 	public static function getCommandName(): string
 	{
-		return 'worker:presenter';
+		return 'worker:command';
 	}
 
 	public function configureCommand(Command $command): void
@@ -26,9 +26,9 @@ class PresenterJob extends AbstractJob
 		parent::configureCommand($command);
 
 		$command
-			->setDescription('Generate presenter and default template.')
-			->addArgument('name', InputArgument::OPTIONAL, 'Presenter name')
-			->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Presenter namespace');
+			->setDescription('Generate command for symfony/command package.')
+			->addArgument('name', InputArgument::OPTIONAL, 'Command name')
+			->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Command namespace');
 	}
 
 	public function interact(InputInterface $input, SymfonyStyle $io, Command $command): void
@@ -36,9 +36,9 @@ class PresenterJob extends AbstractJob
 		parent::interact($input, $io, $command);
 
 		if ($input->getArgument('name') === null) {
-			$entity = $io->ask('Enter presenter name', null, function (?string $answer): string {
+			$entity = $io->ask('Enter command name', null, function (?string $answer): string {
 				if ($answer === null) {
-					throw new InvalidArgumentException('Please, enter presenter name.');
+					throw new InvalidArgumentException('Please, enter command name.');
 				}
 
 				return $answer;
@@ -48,9 +48,9 @@ class PresenterJob extends AbstractJob
 		}
 
 		if ($input->getOption('namespace') === null) {
-			$namespace = $io->ask('Enter presenter namespace', $input->getOption('root-namespace') . '\\Presenters', function (?string $answer) use ($input): string {
+			$namespace = $io->ask('Enter command namespace', $input->getOption('root-namespace') . '\\Commands', function (?string $answer) use ($input): string {
 				if ($answer === null || !Strings::startsWith($answer, $input->getOption('root-namespace'))) {
-					throw new InvalidOptionException('Presenter namespace must be part of root namespace.');
+					throw new InvalidOptionException('Command namespace must be part of root namespace.');
 				}
 
 				return $answer;
@@ -69,22 +69,10 @@ class PresenterJob extends AbstractJob
 			mkdir($directory, 0777, true);
 		}
 
-		$filename = $directory . '/' . $input->getArgument('name') . 'Presenter.php';
+		$filename = $directory . '/' . $input->getArgument('name') . 'Command.php';
 
 		if (file_exists($filename)) {
 			throw new RuntimeException(sprintf('File %s already exists!', $filename));
-		}
-
-		$latteDirectory = $directory . '/templates/' . $input->getArgument('name');
-
-		if (!file_exists($latteDirectory)) {
-			mkdir($latteDirectory, 0777, true);
-		}
-
-		$latteFilename = $latteDirectory . '/default.latte';
-
-		if (file_exists($latteFilename)) {
-			throw new RuntimeException(sprintf('File %s already exists!', $latteFilename));
 		}
 
 		$file = new PhpFile();
@@ -93,15 +81,35 @@ class PresenterJob extends AbstractJob
 			$file->setStrictTypes(true);
 		}
 
-		$file
+		$namespace = $file
 			->addNamespace($input->getOption('namespace'))
-			->addUse('Nette\\Application\\UI\\Presenter')
-			->addClass($input->getArgument('name') . 'Presenter')
-			->setExtends('Nette\\Application\\UI\\Presenter');
+			->addUse('Symfony\\Component\\Console\\Command\\Command');
+
+		$class = $namespace
+			->addClass($input->getArgument('name') . 'Command')
+			->setExtends('Symfony\\Component\\Console\\Command\\Command');
+
+		$method = $class
+			->addMethod('execute')
+			->setVisibility('protected')
+			->setReturnType('int')
+			->setBody('return 0;');
+
+		$parameter = $method->addParameter('input');
+
+		if (method_exists($parameter, 'setType')) {
+			$namespace->addUse('Symfony\\Component\\Console\\Input\\InputInterface');
+			$parameter->setType('Symfony\\Component\\Console\\Input\\InputInterface');
+		}
+
+		$parameter = $method->addParameter('output');
+
+		if (method_exists($parameter, 'setType')) {
+			$namespace->addUse('Symfony\\Component\\Console\\Output\\OutputInterface');
+			$parameter->setType('Symfony\\Component\\Console\\Output\\OutputInterface');
+		}
 
 		file_put_contents($filename, (string) $file);
-
-		file_put_contents($latteFilename, '{block content}' . PHP_EOL);
 
 		$io->success('Done.');
 
