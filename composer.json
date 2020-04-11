@@ -2,11 +2,11 @@
   "name": "adbros/worker",
   "description": "Simple interactive worker for doing hard jobs.",
   "keywords": [
+    "console",
     "generator",
     "nette",
-    "nextras/orm",
+    "orm",
     "presenter",
-    "symfony/console",
     "utility"
   ],
   "type": "library",
