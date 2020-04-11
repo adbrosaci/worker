@@ -95,6 +95,7 @@ class PresenterJob extends AbstractJob
 
 		$file
 			->addNamespace($input->getOption('namespace'))
+			->addUse('Nette\\Application\\UI\\Presenter')
 			->addClass($input->getArgument('name') . 'Presenter')
 			->setExtends('Nette\\Application\\UI\\Presenter');
 

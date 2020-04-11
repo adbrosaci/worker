@@ -86,6 +86,7 @@ class OrmJob extends AbstractJob
 
 		$file
 			->addNamespace($input->getOption('namespace'))
+			->addUse('Nextras\\Orm\\Entity\\Entity')
 			->addClass($input->getArgument('entity'))
 			->setExtends('Nextras\\Orm\\Entity\\Entity')
 			->addComment('@property int $id {primary}');
@@ -100,6 +101,7 @@ class OrmJob extends AbstractJob
 
 		$file
 			->addNamespace($input->getOption('namespace'))
+			->addUse('Nextras\\Orm\\Repository\\Repository')
 			->addClass($input->getArgument('repository') . 'Repository')
 			->setExtends('Nextras\\Orm\\Repository\\Repository')
 			->addMethod('getEntityClassNames')
@@ -118,6 +120,7 @@ class OrmJob extends AbstractJob
 
 		$file
 			->addNamespace($input->getOption('namespace'))
+			->addUse('Nextras\\Orm\\Mapper\\Mapper')
 			->addClass($input->getArgument('repository') . 'Mapper')
 			->setExtends('Nextras\\Orm\\Mapper\\Mapper');
 
