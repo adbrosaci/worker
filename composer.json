@@ -5,7 +5,9 @@
     "generator",
     "nette",
     "nextras/orm",
-    "presenter"
+    "presenter",
+    "symfony/console",
+    "utility"
   ],
   "type": "library",
   "license": "MIT",

@@ -1,5 +1,5 @@
 # Worker
-Simple interactive worker for doing hard jobs. Inspired by [symfony/maker-bundle](https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html)
+Simple interactive worker for doing hard jobs. Inspired by [symfony/maker-bundle](https://github.com/symfony/maker-bundle).
 
 ## Installation
 ```shell
