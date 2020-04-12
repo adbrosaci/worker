@@ -33,7 +33,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Adbros\\Worker\\": "src/"
+      "Adbros\\Worker\\": "src/",
+      "Adbors\\Worker\\Tests\\": "tests/cases"
     }
   },
   "scripts": {
