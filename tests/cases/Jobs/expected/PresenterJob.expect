@@ -1,0 +1,11 @@
+<?php
+
+declare(strict_types=1);
+
+namespace My\App\My\Presenters;
+
+use Nette\Application\UI\Presenter;
+
+class TestPresenter extends Presenter
+{
+}

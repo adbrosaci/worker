@@ -20,6 +20,7 @@
   "require-dev": {
     "nette/di": "^2.4 || ^3.0",
     "ninjify/coding-standard": "^0.10",
+    "ninjify/nunjuck": "^0.3",
     "php-parallel-lint/php-console-highlighter": "^0.4",
     "php-parallel-lint/php-parallel-lint": "^1.2",
     "phpstan/phpstan": "^0.12",
@@ -37,14 +38,20 @@
   },
   "scripts": {
     "cs": [
-      "parallel-lint -e php,phpt --blame src",
-      "phpcs --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --colors -nsp src"
+      "parallel-lint -e php,phpt --blame src tests --exclude tests/tmp",
+      "phpcs --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --colors -nsp src tests --ignore=tests/tmp"
     ],
     "cs-fix": [
-      "phpcbf --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --colors -nsp src"
+      "phpcbf --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --colors -nsp src tests --ignore=tests/tmp"
     ],
     "phpstan": [
       "phpstan analyse -l max -c phpstan.neon src"
+    ],
+    "test": [
+      "tester -C tests"
+    ],
+    "coverage": [
+      "tester -p phpdbg -C --coverage coverage.xml --coverage-src src tests/cases"
     ]
   }
 }

@@ -1,3 +1,5 @@
 composer.lock
+coverage.xml
 
+tests/tmp
 vendor

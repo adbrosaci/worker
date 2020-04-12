@@ -1,0 +1,11 @@
+<?php
+
+declare(strict_types=1);
+
+namespace My\App\My\Model\Orm;
+
+use Nextras\Orm\Mapper\Mapper;
+
+class TestsMapper extends Mapper
+{
+}

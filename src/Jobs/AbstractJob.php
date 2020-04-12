@@ -31,7 +31,7 @@ abstract class AbstractJob implements IJob
 
 	public function interact(InputInterface $input, SymfonyStyle $io, Command $command): void
 	{
-		if ($input->getOption('root-directory') === null) {
+		if ($input->getOption('root-directory') === null || !is_dir($input->getOption('root-directory'))) {
 			$directory = $io->ask('Enter namespace root directory', $this->fileManager->appDir, function (?string $answer): string {
 				if ($answer === null || !is_dir($answer)) {
 					throw new InvalidOptionException(sprintf('Please, enter valid namespace root directory. Directory "%s" does not exists.', $answer));
@@ -43,7 +43,7 @@ abstract class AbstractJob implements IJob
 			$input->setOption('root-directory', $directory);
 		}
 
-		if ($input->getOption('root-namespace') === null) {
+		if ($input->getOption('root-namespace') === null || !$this->isNamespace($input->getOption('root-namespace'))) {
 			$namespace = $io->ask('Enter PSR-4 namespace root', 'App', function (?string $answer): string {
 				if ($answer === null || !$this->isNamespace($answer)) {
 					throw new InvalidOptionException(sprintf('Please, enter valid PSR-4 namespace root. PSR-4 namespace root "%s" is not valid.', $answer));
