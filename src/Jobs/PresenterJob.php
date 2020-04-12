@@ -3,7 +3,6 @@
 namespace Adbros\Worker\Jobs;
 
 use Nette\PhpGenerator\PhpFile;
-use Nette\Utils\Strings;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\InvalidOptionException;
@@ -37,8 +36,8 @@ class PresenterJob extends AbstractJob
 
 		if ($input->getArgument('name') === null) {
 			$name = $io->ask('Enter presenter name', null, function (?string $answer): string {
-				if ($answer === null) {
-					throw new InvalidArgumentException('Please, enter presenter name.');
+				if ($answer === null || !$this->isClass($answer)) {
+					throw new InvalidArgumentException('Please, enter valid presenter name.');
 				}
 
 				return $answer;
@@ -49,8 +48,8 @@ class PresenterJob extends AbstractJob
 
 		if ($input->getOption('namespace') === null) {
 			$namespace = $io->ask('Enter presenter namespace', $input->getOption('root-namespace') . '\\Presenters', function (?string $answer) use ($input): string {
-				if ($answer === null || !Strings::startsWith($answer, $input->getOption('root-namespace'))) {
-					throw new InvalidOptionException('Presenter namespace must be part of root namespace.');
+				if ($answer === null || !$this->isNamespace($answer, $input->getOption('root-namespace'))) {
+					throw new InvalidOptionException('Please, enter valid presenter namespace.');
 				}
 
 				return $answer;

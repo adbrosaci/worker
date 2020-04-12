@@ -3,7 +3,6 @@
 namespace Adbros\Worker\Jobs;
 
 use Nette\PhpGenerator\PhpFile;
-use Nette\Utils\Strings;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\InvalidOptionException;
@@ -38,8 +37,8 @@ class OrmJob extends AbstractJob
 
 		if ($input->getArgument('entity') === null) {
 			$entity = $io->ask('Enter entity name', null, function (?string $answer): string {
-				if ($answer === null) {
-					throw new InvalidArgumentException('Please, enter entity name.');
+				if ($answer === null || !$this->isClass($answer)) {
+					throw new InvalidArgumentException('Please, enter valid entity name.');
 				}
 
 				return $answer;
@@ -49,15 +48,21 @@ class OrmJob extends AbstractJob
 		}
 
 		if ($input->getArgument('repository') === null) {
-			$repository = $io->ask('Enter repository and mapper name', $input->getArgument('entity') . 's');
+			$repository = $io->ask('Enter repository and mapper name', $input->getArgument('entity') . 's', function (?string $answer): string {
+				if ($answer === null || !$this->isClass($answer)) {
+					throw new InvalidArgumentException('Please, enter valid repository name.');
+				}
+
+				return $answer;
+			});
 
 			$input->setArgument('repository', $repository);
 		}
 
 		if ($input->getOption('namespace') === null) {
 			$namespace = $io->ask('Enter model namespace', $input->getOption('root-namespace') . '\\Model\\Orm\\' . $input->getArgument('entity'), function (?string $answer) use ($input): string {
-				if ($answer === null || !Strings::startsWith($answer, $input->getOption('root-namespace'))) {
-					throw new InvalidOptionException('Model namespace must be part of root namespace.');
+				if ($answer === null || !$this->isNamespace($answer, $input->getOption('root-namespace'))) {
+					throw new InvalidOptionException('Please, enter valid model namespace.');
 				}
 
 				return $answer;

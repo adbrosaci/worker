@@ -3,7 +3,6 @@
 namespace Adbros\Worker\Jobs;
 
 use Nette\PhpGenerator\PhpFile;
-use Nette\Utils\Strings;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\InvalidOptionException;
@@ -37,8 +36,8 @@ class CommandJob extends AbstractJob
 
 		if ($input->getArgument('name') === null) {
 			$name = $io->ask('Enter command name', null, function (?string $answer): string {
-				if ($answer === null) {
-					throw new InvalidArgumentException('Please, enter command name.');
+				if ($answer === null || !$this->isClass($answer)) {
+					throw new InvalidArgumentException('Please, enter valid command name.');
 				}
 
 				return $answer;
@@ -49,8 +48,8 @@ class CommandJob extends AbstractJob
 
 		if ($input->getOption('namespace') === null) {
 			$namespace = $io->ask('Enter command namespace', $input->getOption('root-namespace') . '\\Commands', function (?string $answer) use ($input): string {
-				if ($answer === null || !Strings::startsWith($answer, $input->getOption('root-namespace'))) {
-					throw new InvalidOptionException('Command namespace must be part of root namespace.');
+				if ($answer === null || !$this->isNamespace($answer, $input->getOption('root-namespace'))) {
+					throw new InvalidOptionException('Please, enter valid command namespace.');
 				}
 
 				return $answer;
