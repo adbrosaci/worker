@@ -28,6 +28,9 @@ extensions:
 # Generate command for symfony/command package
 php bin/console worker:command [options] [--] [<name>]
 
+# Generate control with factory and template
+php bin/console worker:control [options] [--] [<name>]
+
 # Generate model for nextras/orm package
 php bin/console worker:orm [options] [--] [<entity> [<repository>]]
 
