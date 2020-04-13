@@ -33,8 +33,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Adbros\\Worker\\": "src/",
-      "Adbors\\Worker\\Tests\\": "tests/cases"
+      "Adbros\\Worker\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Adbros\\Worker\\Tests\\": "tests/cases/"
     }
   },
   "scripts": {
@@ -46,7 +50,7 @@
       "phpcbf --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --colors -nsp src tests --ignore=tests/tmp"
     ],
     "phpstan": [
-      "phpstan analyse -l max -c phpstan.neon src"
+      "phpstan analyse -l max -c phpstan.neon src tests"
     ],
     "test": [
       "tester -C tests"

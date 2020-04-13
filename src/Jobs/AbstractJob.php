@@ -14,6 +14,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 abstract class AbstractJob implements IJob
 {
 
+	public const PHP_IDENT = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*';
+
 	/** @var FileManager */
 	private $fileManager;
 
@@ -31,9 +33,9 @@ abstract class AbstractJob implements IJob
 
 	public function interact(InputInterface $input, SymfonyStyle $io, Command $command): void
 	{
-		if ($input->getOption('root-directory') === null || !is_dir($input->getOption('root-directory'))) {
+		if (!is_string($input->getOption('root-directory')) || !is_dir($input->getOption('root-directory'))) {
 			$directory = $io->ask('Enter namespace root directory', $this->fileManager->appDir, function (?string $answer): string {
-				if ($answer === null || !is_dir($answer)) {
+				if (!is_string($answer) || !is_dir($answer)) {
 					throw new InvalidOptionException(sprintf('Please, enter valid namespace root directory. Directory "%s" does not exists.', $answer));
 				}
 
@@ -43,9 +45,9 @@ abstract class AbstractJob implements IJob
 			$input->setOption('root-directory', $directory);
 		}
 
-		if ($input->getOption('root-namespace') === null || !$this->isNamespace($input->getOption('root-namespace'))) {
+		if (!$this->isNamespace($input->getOption('root-namespace'))) {
 			$namespace = $io->ask('Enter PSR-4 namespace root', 'App', function (?string $answer): string {
-				if ($answer === null || !$this->isNamespace($answer)) {
+				if (!$this->isNamespace($answer)) {
 					throw new InvalidOptionException(sprintf('Please, enter valid PSR-4 namespace root. PSR-4 namespace root "%s" is not valid.', $answer));
 				}
 
@@ -56,22 +58,25 @@ abstract class AbstractJob implements IJob
 		}
 	}
 
-	protected function isClass(string $class): bool
+	/**
+	 * @param mixed $value
+	 */
+	protected function isClass($value): bool
 	{
-		return is_array(Strings::match($class, '~^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$~'));
+		return is_string($value) && preg_match('#^' . self::PHP_IDENT . '$#D', $value) === 1;
 	}
 
-	protected function isNamespace(string $namespace, ?string $rootNamespace = null): bool
+	/**
+	 * @param mixed $value
+	 * @param mixed $rootNamespace
+	 */
+	protected function isNamespace($value, $rootNamespace = null): bool
 	{
-		$items = explode('\\', $namespace);
-
-		foreach ($items as $item) {
-			if (!$this->isClass($item)) {
-				return false;
-			}
+		if ($rootNamespace !== null && !$this->isNamespace($rootNamespace)) {
+			return false;
 		}
 
-		return $rootNamespace === null || Strings::startsWith($namespace, $rootNamespace);
+		return is_string($value) && preg_match('#^' . self::PHP_IDENT . '(\\\\' . self::PHP_IDENT . ')*$#D', $value) === 1;
 	}
 
 	protected function namespaceToPath(string $namespace, string $rootNamespace): string

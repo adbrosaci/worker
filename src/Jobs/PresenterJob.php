@@ -34,9 +34,9 @@ class PresenterJob extends AbstractJob
 	{
 		parent::interact($input, $io, $command);
 
-		if ($input->getArgument('name') === null || !$this->isClass($input->getArgument('name'))) {
+		if (!$this->isClass($input->getArgument('name'))) {
 			$name = $io->ask('Enter presenter name', null, function (?string $answer): string {
-				if ($answer === null || !$this->isClass($answer)) {
+				if (!$this->isClass($answer)) {
 					throw new InvalidArgumentException('Please, enter valid presenter name.');
 				}
 
@@ -46,9 +46,9 @@ class PresenterJob extends AbstractJob
 			$input->setArgument('name', $name);
 		}
 
-		if ($input->getOption('namespace') === null || !$this->isNamespace($input->getOption('namespace'), $input->getOption('root-namespace'))) {
+		if (!$this->isNamespace($input->getOption('namespace'), $input->getOption('root-namespace'))) {
 			$namespace = $io->ask('Enter presenter namespace', $input->getOption('root-namespace') . '\\Presenters', function (?string $answer) use ($input): string {
-				if ($answer === null || !$this->isNamespace($answer, $input->getOption('root-namespace'))) {
+				if (!$this->isNamespace($answer, $input->getOption('root-namespace'))) {
 					throw new InvalidOptionException('Please, enter valid presenter namespace.');
 				}
 

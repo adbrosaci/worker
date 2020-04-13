@@ -39,5 +39,4 @@ class WorkerExtensionTest extends TestCase
 
 }
 
-$test_case = new WorkerExtensionTest();
-$test_case->run();
+(new WorkerExtensionTest())->run();

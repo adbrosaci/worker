@@ -35,9 +35,9 @@ class OrmJob extends AbstractJob
 	{
 		parent::interact($input, $io, $command);
 
-		if ($input->getArgument('entity') === null || !$this->isClass($input->getArgument('entity'))) {
+		if (!$this->isClass($input->getArgument('entity'))) {
 			$entity = $io->ask('Enter entity name', null, function (?string $answer): string {
-				if ($answer === null || !$this->isClass($answer)) {
+				if (!$this->isClass($answer)) {
 					throw new InvalidArgumentException('Please, enter valid entity name.');
 				}
 
@@ -47,9 +47,9 @@ class OrmJob extends AbstractJob
 			$input->setArgument('entity', $entity);
 		}
 
-		if ($input->getArgument('repository') === null || !$this->isClass($input->getArgument('repository'))) {
+		if (!$this->isClass($input->getArgument('repository'))) {
 			$repository = $io->ask('Enter repository and mapper name', $input->getArgument('entity') . 's', function (?string $answer): string {
-				if ($answer === null || !$this->isClass($answer)) {
+				if (!$this->isClass($answer)) {
 					throw new InvalidArgumentException('Please, enter valid repository name.');
 				}
 
@@ -59,9 +59,9 @@ class OrmJob extends AbstractJob
 			$input->setArgument('repository', $repository);
 		}
 
-		if ($input->getOption('namespace') === null || !$this->isNamespace($input->getOption('namespace'), $input->getOption('root-namespace'))) {
+		if (!$this->isNamespace($input->getOption('namespace'), $input->getOption('root-namespace'))) {
 			$namespace = $io->ask('Enter model namespace', $input->getOption('root-namespace') . '\\Model\\Orm\\' . $input->getArgument('entity'), function (?string $answer) use ($input): string {
-				if ($answer === null || !$this->isNamespace($answer, $input->getOption('root-namespace'))) {
+				if (!$this->isNamespace($answer, $input->getOption('root-namespace'))) {
 					throw new InvalidOptionException('Please, enter valid model namespace.');
 				}
 

@@ -3,6 +3,7 @@
 use Nette\Loaders\RobotLoader;
 use Nette\Utils\Random;
 use Ninjify\Nunjuck\Environment;
+use Tester\Helpers;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -24,7 +25,4 @@ Environment::setupRobotLoader(function (RobotLoader $robotLoader): void {
 });
 
 define('OUTPUT_DIR', sys_get_temp_dir() . '/' . Random::generate());
-
-if (!is_dir(OUTPUT_DIR)) {
-	mkdir(OUTPUT_DIR);
-}
+Helpers::purge(OUTPUT_DIR);

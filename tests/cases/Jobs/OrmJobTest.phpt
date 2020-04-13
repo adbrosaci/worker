@@ -10,7 +10,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Tester\Assert;
 
 require_once __DIR__ . '/../../bootstrap.php';
-require_once __DIR__ . '/JobsTestCase.php';
 
 /**
  * @testCase
@@ -71,5 +70,4 @@ class OrmJobTest extends JobsTestCase
 
 }
 
-$test_case = new OrmJobTest();
-$test_case->run();
+(new OrmJobTest())->run();
