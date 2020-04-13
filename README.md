@@ -25,7 +25,7 @@ extensions:
 ## Usage
 
 ```shell
-# Generate command for symfony/command package
+# Generate command for symfony/console package
 php bin/console worker:command [options] [--] [<name>]
 
 # Generate control with factory and template

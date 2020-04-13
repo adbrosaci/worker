@@ -25,7 +25,7 @@ class CommandJob extends AbstractJob
 		parent::configureCommand($command);
 
 		$command
-			->setDescription('Generate command for symfony/command package.')
+			->setDescription('Generate command for symfony/console package.')
 			->addArgument('name', InputArgument::OPTIONAL, 'Command name')
 			->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Command namespace')
 			->addOption('parent', 'p', InputOption::VALUE_OPTIONAL, 'Command parent class');
