@@ -61,7 +61,7 @@ class ControlJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('control-parent'))) {
-			$namespace = $io->ask('Enter entity parent class', 'Nette\\Application\\UI\\Control', function (?string $answer): string {
+			$namespace = $io->ask('Enter control parent class', 'Nette\\Application\\UI\\Control', function (?string $answer): string {
 				if (!$this->isNamespace($answer)) {
 					throw new InvalidOptionException('Please, enter valid control parent class.');
 				}
