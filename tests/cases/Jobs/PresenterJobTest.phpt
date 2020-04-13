@@ -5,17 +5,23 @@ namespace Adbros\Worker\Tests\Jobs;
 use Adbros\Worker\Command\WorkerCommand;
 use Adbros\Worker\FileManager;
 use Adbros\Worker\Jobs\PresenterJob;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
+use Adbros\Worker\Tests\CommandTester;
 use Tester\Assert;
+use Tester\TestCase;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
 /**
  * @testCase
  */
-class PresenterJobTest extends JobsTestCase
+class PresenterJobTest extends TestCase
 {
+
+	/** @var string[] */
+	protected $inputs;
+
+	/** @var CommandTester */
+	protected $commandTester;
 
 	public function setUp(): void
 	{
@@ -26,19 +32,19 @@ class PresenterJobTest extends JobsTestCase
 			'--namespace' => 'My\\App\\My\\Presenters',
 			'--parent' => 'My\\App\\My\\Presenters\\BasePresenter',
 		];
+
+		$this->commandTester = new CommandTester(
+			new WorkerCommand(
+				new PresenterJob(
+					new FileManager('')
+				)
+			)
+		);
 	}
 
 	public function testNoninteractive(): void
 	{
-		$fileManager = new FileManager('');
-
-		$command = new WorkerCommand(new PresenterJob($fileManager));
-
-		$input = new ArrayInput($this->inputs);
-
-		$output = new BufferedOutput();
-
-		Assert::same(0, $command->run($input, $output));
+		Assert::same(0, $this->commandTester->run($this->inputs, false));
 
 		Assert::same(file_get_contents(__DIR__ . '/expected/PresenterJob.expect'), file_get_contents(OUTPUT_DIR . '/My/Presenters/TestPresenter.php'));
 
@@ -47,17 +53,23 @@ class PresenterJobTest extends JobsTestCase
 
 	public function testInteractive(): void
 	{
-		$fileManager = new FileManager('');
+		Assert::same(0, $this->commandTester->run($this->inputs, true));
 
-		$command = new WorkerCommand(new PresenterJob($fileManager));
+		Assert::same(file_get_contents(__DIR__ . '/expected/PresenterJob.expect'), file_get_contents(OUTPUT_DIR . '/My/Presenters/TestPresenter.php'));
 
-		$input = new ArrayInput([]);
+		Assert::same(file_get_contents(__DIR__ . '/expected/PresenterJob.template.expect'), file_get_contents(OUTPUT_DIR . '/My/Presenters/templates/Test/default.latte'));
+	}
 
-		$input->setStream($this->createStream($this->inputs));
+	public function testInteractiveWithErrors(): void
+	{
+		$inputsWithErrors = [];
 
-		$output = new BufferedOutput();
+		foreach ($this->inputs as $input) {
+			$inputsWithErrors[] = $input . '!';
+			$inputsWithErrors[] = $input;
+		}
 
-		Assert::same(0, $command->run($input, $output));
+		Assert::same(0, $this->commandTester->run($inputsWithErrors, true));
 
 		Assert::same(file_get_contents(__DIR__ . '/expected/PresenterJob.expect'), file_get_contents(OUTPUT_DIR . '/My/Presenters/TestPresenter.php'));
 

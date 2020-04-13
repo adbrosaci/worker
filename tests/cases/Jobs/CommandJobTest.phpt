@@ -5,17 +5,23 @@ namespace Adbros\Worker\Tests\Jobs;
 use Adbros\Worker\Command\WorkerCommand;
 use Adbros\Worker\FileManager;
 use Adbros\Worker\Jobs\CommandJob;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
+use Adbros\Worker\Tests\CommandTester;
 use Tester\Assert;
+use Tester\TestCase;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
 /**
  * @testCase
  */
-class CommandJobTest extends JobsTestCase
+class CommandJobTest extends TestCase
 {
+
+	/** @var string[] */
+	protected $inputs;
+
+	/** @var CommandTester */
+	protected $commandTester;
 
 	public function setUp(): void
 	{
@@ -26,36 +32,40 @@ class CommandJobTest extends JobsTestCase
 			'--namespace' => 'My\\App\\My\\Commands',
 			'--parent' => 'My\\App\\My\\Commands\\BaseCommand',
 		];
+
+		$this->commandTester = new CommandTester(
+			new WorkerCommand(
+				new CommandJob(
+					new FileManager('')
+				)
+			)
+		);
 	}
 
 	public function testNoninteractive(): void
 	{
-		$fileManager = new FileManager('');
-
-		$command = new WorkerCommand(new CommandJob($fileManager));
-
-		$input = new ArrayInput($this->inputs);
-
-		$output = new BufferedOutput();
-
-		Assert::same(0, $command->run($input, $output));
+		Assert::same(0, $this->commandTester->run($this->inputs, false));
 
 		Assert::same(file_get_contents(__DIR__ . '/expected/CommandJob.expect'), file_get_contents(OUTPUT_DIR . '/My/Commands/TestCommand.php'));
 	}
 
 	public function testInteractive(): void
 	{
-		$fileManager = new FileManager('');
+		Assert::same(0, $this->commandTester->run($this->inputs, true));
 
-		$command = new WorkerCommand(new CommandJob($fileManager));
+		Assert::same(file_get_contents(__DIR__ . '/expected/CommandJob.expect'), file_get_contents(OUTPUT_DIR . '/My/Commands/TestCommand.php'));
+	}
 
-		$input = new ArrayInput([]);
+	public function testInteractiveWithErrors(): void
+	{
+		$inputsWithErrors = [];
 
-		$input->setStream($this->createStream($this->inputs));
+		foreach ($this->inputs as $input) {
+			$inputsWithErrors[] = $input . '!';
+			$inputsWithErrors[] = $input;
+		}
 
-		$output = new BufferedOutput();
-
-		Assert::same(0, $command->run($input, $output));
+		Assert::same(0, $this->commandTester->run($inputsWithErrors, true));
 
 		Assert::same(file_get_contents(__DIR__ . '/expected/CommandJob.expect'), file_get_contents(OUTPUT_DIR . '/My/Commands/TestCommand.php'));
 	}

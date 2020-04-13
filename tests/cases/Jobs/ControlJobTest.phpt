@@ -5,17 +5,23 @@ namespace Adbros\Worker\Tests\Jobs;
 use Adbros\Worker\Command\WorkerCommand;
 use Adbros\Worker\FileManager;
 use Adbros\Worker\Jobs\ControlJob;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
+use Adbros\Worker\Tests\CommandTester;
 use Tester\Assert;
+use Tester\TestCase;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
 /**
  * @testCase
  */
-class ControlJobTest extends JobsTestCase
+class ControlJobTest extends TestCase
 {
+
+	/** @var string[] */
+	protected $inputs;
+
+	/** @var CommandTester */
+	protected $commandTester;
 
 	public function setUp(): void
 	{
@@ -27,19 +33,19 @@ class ControlJobTest extends JobsTestCase
 			'--control-parent' => 'My\\App\\My\\Controls\\BaseControl',
 			'--factory-parent' => 'My\\App\\My\\Controls\\BaseFactory',
 		];
+
+		$this->commandTester = new CommandTester(
+			new WorkerCommand(
+				new ControlJob(
+					new FileManager('')
+				)
+			)
+		);
 	}
 
 	public function testNoninteractive(): void
 	{
-		$fileManager = new FileManager('');
-
-		$command = new WorkerCommand(new ControlJob($fileManager));
-
-		$input = new ArrayInput($this->inputs);
-
-		$output = new BufferedOutput();
-
-		Assert::same(0, $command->run($input, $output));
+		Assert::same(0, $this->commandTester->run($this->inputs, false));
 
 		Assert::same(file_get_contents(__DIR__ . '/expected/ControlJob.control.expect'), file_get_contents(OUTPUT_DIR . '/My/Controls/Test/TestControl.php'));
 
@@ -50,17 +56,25 @@ class ControlJobTest extends JobsTestCase
 
 	public function testInteractive(): void
 	{
-		$fileManager = new FileManager('');
+		Assert::same(0, $this->commandTester->run($this->inputs, true));
 
-		$command = new WorkerCommand(new ControlJob($fileManager));
+		Assert::same(file_get_contents(__DIR__ . '/expected/ControlJob.control.expect'), file_get_contents(OUTPUT_DIR . '/My/Controls/Test/TestControl.php'));
 
-		$input = new ArrayInput([]);
+		Assert::same(file_get_contents(__DIR__ . '/expected/ControlJob.factory.expect'), file_get_contents(OUTPUT_DIR . '/My/Controls/Test/TestFactory.php'));
 
-		$input->setStream($this->createStream($this->inputs));
+		Assert::same(file_get_contents(__DIR__ . '/expected/ControlJob.template.expect'), file_get_contents(OUTPUT_DIR . '/My/Controls/Test/TestControl.latte'));
+	}
 
-		$output = new BufferedOutput();
+	public function testInteractiveWithErrors(): void
+	{
+		$inputsWithErrors = [];
 
-		Assert::same(0, $command->run($input, $output));
+		foreach ($this->inputs as $input) {
+			$inputsWithErrors[] = $input . '!';
+			$inputsWithErrors[] = $input;
+		}
+
+		Assert::same(0, $this->commandTester->run($inputsWithErrors, true));
 
 		Assert::same(file_get_contents(__DIR__ . '/expected/ControlJob.control.expect'), file_get_contents(OUTPUT_DIR . '/My/Controls/Test/TestControl.php'));
 

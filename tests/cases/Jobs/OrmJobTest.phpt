@@ -5,17 +5,23 @@ namespace Adbros\Worker\Tests\Jobs;
 use Adbros\Worker\Command\WorkerCommand;
 use Adbros\Worker\FileManager;
 use Adbros\Worker\Jobs\OrmJob;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
+use Adbros\Worker\Tests\CommandTester;
 use Tester\Assert;
+use Tester\TestCase;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
 /**
  * @testCase
  */
-class OrmJobTest extends JobsTestCase
+class OrmJobTest extends TestCase
 {
+
+	/** @var string[] */
+	protected $inputs;
+
+	/** @var CommandTester */
+	protected $commandTester;
 
 	public function setUp(): void
 	{
@@ -29,19 +35,19 @@ class OrmJobTest extends JobsTestCase
 			'--repository-parent' => 'My\\App\\My\\Model\\Orm\\BaseRepository',
 			'--mapper-parent' => 'My\\App\\My\\Model\\Orm\\BaseMapper',
 		];
+
+		$this->commandTester = new CommandTester(
+			new WorkerCommand(
+				new OrmJob(
+					new FileManager('')
+				)
+			)
+		);
 	}
 
 	public function testNoninteractive(): void
 	{
-		$fileManager = new FileManager('');
-
-		$command = new WorkerCommand(new OrmJob($fileManager));
-
-		$input = new ArrayInput($this->inputs);
-
-		$output = new BufferedOutput();
-
-		Assert::same(0, $command->run($input, $output));
+		Assert::same(0, $this->commandTester->run($this->inputs, false));
 
 		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.entity.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test/Test.php'));
 
@@ -52,17 +58,25 @@ class OrmJobTest extends JobsTestCase
 
 	public function testInteractive(): void
 	{
-		$fileManager = new FileManager('');
+		Assert::same(0, $this->commandTester->run($this->inputs, true));
 
-		$command = new WorkerCommand(new OrmJob($fileManager));
+		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.entity.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test/Test.php'));
 
-		$input = new ArrayInput([]);
+		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.mapper.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test/TestsMapper.php'));
 
-		$input->setStream($this->createStream($this->inputs));
+		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.repository.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test/TestsRepository.php'));
+	}
 
-		$output = new BufferedOutput();
+	public function testInteractiveWithErrors(): void
+	{
+		$inputsWithErrors = [];
 
-		Assert::same(0, $command->run($input, $output));
+		foreach ($this->inputs as $input) {
+			$inputsWithErrors[] = $input . '!';
+			$inputsWithErrors[] = $input;
+		}
+
+		Assert::same(0, $this->commandTester->run($inputsWithErrors, true));
 
 		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.entity.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test/Test.php'));
 
