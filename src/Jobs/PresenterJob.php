@@ -60,7 +60,7 @@ class PresenterJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('parent'))) {
-			$namespace = $io->ask('Enter command parent class', 'Nette\\Application\\UI\\Presenter', function (?string $answer): string {
+			$namespace = $io->ask('Enter presenter parent class', 'Nette\\Application\\UI\\Presenter', function (?string $answer): string {
 				if (!$this->isNamespace($answer)) {
 					throw new InvalidOptionException('Please, enter valid presenter parent class.');
 				}
