@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace My\App\My\Model\Orm;
+namespace My\App\My\Model\Orm\Test;
 
-use Nextras\Orm\Repository\Repository;
+use My\App\My\Model\Orm\BaseRepository;
 
-class TestsRepository extends Repository
+class TestsRepository extends BaseRepository
 {
 	/**
 	 * @return string[]

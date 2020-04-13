@@ -27,7 +27,8 @@ class CommandJob extends AbstractJob
 		$command
 			->setDescription('Generate command for symfony/command package.')
 			->addArgument('name', InputArgument::OPTIONAL, 'Command name')
-			->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Command namespace');
+			->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Command namespace')
+			->addOption('parent', 'p', InputOption::VALUE_OPTIONAL, 'Command parent class');
 	}
 
 	public function interact(InputInterface $input, SymfonyStyle $io, Command $command): void
@@ -57,6 +58,18 @@ class CommandJob extends AbstractJob
 
 			$input->setOption('namespace', $namespace);
 		}
+
+		if (!$this->isNamespace($input->getOption('parent'))) {
+			$namespace = $io->ask('Enter command parent class', 'Symfony\\Component\\Console\\Command\\Command', function (?string $answer): string {
+				if (!$this->isNamespace($answer)) {
+					throw new InvalidOptionException('Please, enter valid command parent class.');
+				}
+
+				return $answer;
+			});
+
+			$input->setOption('parent', $namespace);
+		}
 	}
 
 	public function generate(InputInterface $input, SymfonyStyle $io): int
@@ -82,11 +95,11 @@ class CommandJob extends AbstractJob
 
 		$namespace = $file
 			->addNamespace($input->getOption('namespace'))
-			->addUse('Symfony\\Component\\Console\\Command\\Command');
+			->addUse($input->getOption('parent'));
 
 		$class = $namespace
 			->addClass($input->getArgument('name') . 'Command')
-			->setExtends('Symfony\\Component\\Console\\Command\\Command');
+			->setExtends($input->getOption('parent'));
 
 		$method = $class
 			->addMethod('execute')

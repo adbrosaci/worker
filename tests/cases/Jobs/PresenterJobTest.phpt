@@ -24,6 +24,7 @@ class PresenterJobTest extends JobsTestCase
 			'--root-namespace' => 'My\\App',
 			'name' => 'Test',
 			'--namespace' => 'My\\App\\My\\Presenters',
+			'--parent' => 'My\\App\\My\\Presenters\\BasePresenter',
 		];
 	}
 

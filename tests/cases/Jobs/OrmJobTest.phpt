@@ -24,7 +24,10 @@ class OrmJobTest extends JobsTestCase
 			'--root-namespace' => 'My\\App',
 			'entity' => 'Test',
 			'repository' => 'Tests',
-			'--namespace' => 'My\\App\\My\\Model\\Orm',
+			'--namespace' => 'My\\App\\My\\Model\\Orm\\Test',
+			'--entity-parent' => 'My\\App\\My\\Model\\Orm\\BaseEntity',
+			'--repository-parent' => 'My\\App\\My\\Model\\Orm\\BaseRepository',
+			'--mapper-parent' => 'My\\App\\My\\Model\\Orm\\BaseMapper',
 		];
 	}
 
@@ -40,11 +43,11 @@ class OrmJobTest extends JobsTestCase
 
 		Assert::same(0, $command->run($input, $output));
 
-		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.entity.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test.php'));
+		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.entity.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test/Test.php'));
 
-		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.mapper.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/TestsMapper.php'));
+		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.mapper.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test/TestsMapper.php'));
 
-		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.repository.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/TestsRepository.php'));
+		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.repository.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test/TestsRepository.php'));
 	}
 
 	public function testInteractive(): void
@@ -61,11 +64,11 @@ class OrmJobTest extends JobsTestCase
 
 		Assert::same(0, $command->run($input, $output));
 
-		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.entity.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test.php'));
+		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.entity.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test/Test.php'));
 
-		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.mapper.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/TestsMapper.php'));
+		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.mapper.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test/TestsMapper.php'));
 
-		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.repository.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/TestsRepository.php'));
+		Assert::same(file_get_contents(__DIR__ . '/expected/OrmJob.repository.expect'), file_get_contents(OUTPUT_DIR . '/My/Model/Orm/Test/TestsRepository.php'));
 	}
 
 }

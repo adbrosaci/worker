@@ -24,6 +24,7 @@ class CommandJobTest extends JobsTestCase
 			'--root-namespace' => 'My\\App',
 			'name' => 'Test',
 			'--namespace' => 'My\\App\\My\\Commands',
+			'--parent' => 'My\\App\\My\\Commands\\BaseCommand',
 		];
 	}
 

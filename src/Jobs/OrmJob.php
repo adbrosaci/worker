@@ -28,7 +28,10 @@ class OrmJob extends AbstractJob
 			->setDescription('Generate model for nextras/orm package.')
 			->addArgument('entity', InputArgument::OPTIONAL, 'Entity name')
 			->addArgument('repository', InputArgument::OPTIONAL, 'Repository and mapper name')
-			->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Model namespace');
+			->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Model namespace')
+			->addOption('entity-parent', 'ep', InputOption::VALUE_OPTIONAL, 'Entity parent class')
+			->addOption('repository-parent', 'rp', InputOption::VALUE_OPTIONAL, 'Repository parent class')
+			->addOption('mapper-parent', 'mp', InputOption::VALUE_OPTIONAL, 'Mapper parent class');
 	}
 
 	public function interact(InputInterface $input, SymfonyStyle $io, Command $command): void
@@ -70,6 +73,42 @@ class OrmJob extends AbstractJob
 
 			$input->setOption('namespace', $namespace);
 		}
+
+		if (!$this->isNamespace($input->getOption('entity-parent'))) {
+			$namespace = $io->ask('Enter entity parent class', 'Nextras\\Orm\\Entity\\Entity', function (?string $answer): string {
+				if (!$this->isNamespace($answer)) {
+					throw new InvalidOptionException('Please, enter valid entity parent class.');
+				}
+
+				return $answer;
+			});
+
+			$input->setOption('entity-parent', $namespace);
+		}
+
+		if (!$this->isNamespace($input->getOption('repository-parent'))) {
+			$namespace = $io->ask('Enter repository parent class', 'Nextras\\Orm\\Repository\\Repository', function (?string $answer): string {
+				if (!$this->isNamespace($answer)) {
+					throw new InvalidOptionException('Please, enter valid repository parent class.');
+				}
+
+				return $answer;
+			});
+
+			$input->setOption('repository-parent', $namespace);
+		}
+
+		if (!$this->isNamespace($input->getOption('mapper-parent'))) {
+			$namespace = $io->ask('Enter mapper parent class', 'Nextras\\Orm\\Mapper\\Mapper', function (?string $answer): string {
+				if (!$this->isNamespace($answer)) {
+					throw new InvalidOptionException('Please, enter valid mapper parent class.');
+				}
+
+				return $answer;
+			});
+
+			$input->setOption('mapper-parent', $namespace);
+		}
 	}
 
 	public function generate(InputInterface $input, SymfonyStyle $io): int
@@ -91,9 +130,9 @@ class OrmJob extends AbstractJob
 
 		$file
 			->addNamespace($input->getOption('namespace'))
-			->addUse('Nextras\\Orm\\Entity\\Entity')
+			->addUse($input->getOption('entity-parent'))
 			->addClass($input->getArgument('entity'))
-			->setExtends('Nextras\\Orm\\Entity\\Entity')
+			->setExtends($input->getOption('entity-parent'))
 			->addComment('@property int $id {primary}');
 
 		file_put_contents(($filename = $directory . '/' . $input->getArgument('entity') . '.php'), (string) $file);
@@ -108,9 +147,9 @@ class OrmJob extends AbstractJob
 
 		$file
 			->addNamespace($input->getOption('namespace'))
-			->addUse('Nextras\\Orm\\Repository\\Repository')
+			->addUse($input->getOption('repository-parent'))
 			->addClass($input->getArgument('repository') . 'Repository')
-			->setExtends('Nextras\\Orm\\Repository\\Repository')
+			->setExtends($input->getOption('repository-parent'))
 			->addMethod('getEntityClassNames')
 			->setStatic(true)
 			->setReturnType('array')
@@ -129,9 +168,9 @@ class OrmJob extends AbstractJob
 
 		$file
 			->addNamespace($input->getOption('namespace'))
-			->addUse('Nextras\\Orm\\Mapper\\Mapper')
+			->addUse($input->getOption('mapper-parent'))
 			->addClass($input->getArgument('repository') . 'Mapper')
-			->setExtends('Nextras\\Orm\\Mapper\\Mapper');
+			->setExtends($input->getOption('mapper-parent'));
 
 		file_put_contents(($filename = $directory . '/' . $input->getArgument('repository') . 'Mapper.php'), (string) $file);
 

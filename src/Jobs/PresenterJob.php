@@ -27,7 +27,8 @@ class PresenterJob extends AbstractJob
 		$command
 			->setDescription('Generate presenter and default template.')
 			->addArgument('name', InputArgument::OPTIONAL, 'Presenter name')
-			->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Presenter namespace');
+			->addOption('namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Presenter namespace')
+			->addOption('parent', 'p', InputOption::VALUE_OPTIONAL, 'Presenter parent class');
 	}
 
 	public function interact(InputInterface $input, SymfonyStyle $io, Command $command): void
@@ -56,6 +57,18 @@ class PresenterJob extends AbstractJob
 			});
 
 			$input->setOption('namespace', $namespace);
+		}
+
+		if (!$this->isNamespace($input->getOption('parent'))) {
+			$namespace = $io->ask('Enter command parent class', 'Nette\\Application\\UI\\Presenter', function (?string $answer): string {
+				if (!$this->isNamespace($answer)) {
+					throw new InvalidOptionException('Please, enter valid presenter parent class.');
+				}
+
+				return $answer;
+			});
+
+			$input->setOption('parent', $namespace);
 		}
 	}
 
@@ -94,9 +107,9 @@ class PresenterJob extends AbstractJob
 
 		$file
 			->addNamespace($input->getOption('namespace'))
-			->addUse('Nette\\Application\\UI\\Presenter')
+			->addUse($input->getOption('parent'))
 			->addClass($input->getArgument('name') . 'Presenter')
-			->setExtends('Nette\\Application\\UI\\Presenter');
+			->setExtends($input->getOption('parent'));
 
 		file_put_contents($filename, (string) $file);
 

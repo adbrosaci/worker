@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace My\App\My\Model\Orm;
+namespace My\App\My\Model\Orm\Test;
 
-use Nextras\Orm\Entity\Entity;
+use My\App\My\Model\Orm\BaseEntity;
 
 /**
  * @property int $id {primary}
  */
-class Test extends Entity
+class Test extends BaseEntity
 {
 }
