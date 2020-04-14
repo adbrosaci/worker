@@ -3,8 +3,8 @@ Simple interactive worker for doing hard jobs. Inspired by [symfony/maker-bundle
 
 ---
 
-[![Build Status](https://img.shields.io/travis/com/martenb/worker.svg?style=flat-square)](https://travis-ci.com/martenb/worker)
-[![Code coverage](https://img.shields.io/coveralls/martenb/worker.svg?style=flat-square)](https://coveralls.io/r/martenb/worker)
+[![Build Status](https://img.shields.io/travis/com/adbrosaci/worker.svg?style=flat-square)](https://travis-ci.com/adbrosaci/worker)
+[![Code coverage](https://img.shields.io/coveralls/adbrosaci/worker.svg?style=flat-square)](https://coveralls.io/r/adbrosaci/worker)
 [![Licence](https://img.shields.io/packagist/l/adbros/worker.svg?style=flat-square)](https://packagist.org/packages/adbros/worker)
 [![Downloads this Month](https://img.shields.io/packagist/dm/adbros/worker.svg?style=flat-square)](https://packagist.org/packages/adbros/google)
 [![Downloads total](https://img.shields.io/packagist/dt/adbros/worker.svg?style=flat-square)](https://packagist.org/packages/adbros/worker)
