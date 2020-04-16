@@ -22,6 +22,8 @@ extensions:
     worker: Adbros\Worker\DI\WorkerExtension
 ```
 
+You should enable this extension only  in your local.neon file.
+
 ## Usage
 
 ```shell
