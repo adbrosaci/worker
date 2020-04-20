@@ -22,11 +22,7 @@
     "ninjify/coding-standard": "^0.10",
     "ninjify/nunjuck": "^0.3",
     "php-parallel-lint/php-console-highlighter": "^0.4",
-    "php-parallel-lint/php-parallel-lint": "^1.2",
-    "phpstan/phpstan": "^0.12",
-    "phpstan/phpstan-deprecation-rules": "^0.12",
-    "phpstan/phpstan-nette": "^0.12",
-    "phpstan/phpstan-strict-rules": "^0.12"
+    "php-parallel-lint/php-parallel-lint": "^1.2"
   },
   "suggest": {
     "contributte/console": "Best minimal console (symfony/console) to Nette Framework"
@@ -41,6 +37,9 @@
       "Adbros\\Worker\\Tests\\": "tests/cases/"
     }
   },
+  "bin": [
+    "bin/worker"
+  ],
   "scripts": {
     "cs": [
       "parallel-lint -e php,phpt --blame src tests --exclude tests/tmp",

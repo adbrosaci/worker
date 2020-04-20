@@ -1,9 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Adbros\Worker\Jobs;
+namespace Adbros\Worker\Job;
 
-use Adbros\Worker\FileManager;
-use Adbros\Worker\IJob;
+use Adbros\Worker\Util\FileManager;
 use Nette\Utils\Strings;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidOptionException;

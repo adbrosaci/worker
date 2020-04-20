@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Adbros\Worker\Command;
+namespace Adbros\Worker\Console\Command;
 
-use Adbros\Worker\ConsoleStyle;
-use Adbros\Worker\IJob;
+use Adbros\Worker\Console\Style\ConsoleStyle;
+use Adbros\Worker\Job\IJob;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

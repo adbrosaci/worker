@@ -2,9 +2,9 @@
 
 namespace Adbros\Worker\Tests\DI;
 
-use Adbros\Worker\Command\WorkerCommand;
+use Adbros\Worker\Console\Command\WorkerCommand;
 use Adbros\Worker\DI\WorkerExtension;
-use Adbros\Worker\IJob;
+use Adbros\Worker\Job\IJob;
 use Nette\DI\Compiler;
 use Nette\DI\Container;
 use Nette\DI\ContainerLoader;

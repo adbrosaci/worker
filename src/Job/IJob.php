@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Adbros\Worker;
+namespace Adbros\Worker\Job;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Adbros\Worker\Jobs;
+namespace Adbros\Worker\Job;
 
 use Nette\PhpGenerator\PhpFile;
 use Symfony\Component\Console\Command\Command;

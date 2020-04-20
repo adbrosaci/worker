@@ -2,10 +2,10 @@
 
 namespace Adbros\Worker\Tests\Jobs;
 
-use Adbros\Worker\Command\WorkerCommand;
-use Adbros\Worker\FileManager;
-use Adbros\Worker\Jobs\CommandJob;
+use Adbros\Worker\Console\Command\WorkerCommand;
+use Adbros\Worker\Job\CommandJob;
 use Adbros\Worker\Tests\CommandTester;
+use Adbros\Worker\Util\FileManager;
 use Tester\Assert;
 use Tester\TestCase;
 

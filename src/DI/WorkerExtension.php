@@ -2,9 +2,9 @@
 
 namespace Adbros\Worker\DI;
 
-use Adbros\Worker\Command\WorkerCommand;
-use Adbros\Worker\FileManager;
-use Adbros\Worker\IJob;
+use Adbros\Worker\Console\Command\WorkerCommand;
+use Adbros\Worker\Job\IJob;
+use Adbros\Worker\Util\FileManager;
 use Nette\DI\CompilerExtension;
 use Symfony\Component\Console\ConsoleEvents;
 
