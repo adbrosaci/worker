@@ -2,10 +2,10 @@
 
 namespace Adbros\Worker\Tests\Jobs;
 
+use Adbros\Worker\Config\Config;
 use Adbros\Worker\Console\Command\WorkerCommand;
 use Adbros\Worker\Job\CommandJob;
 use Adbros\Worker\Tests\CommandTester;
-use Adbros\Worker\Util\FileManager;
 use Tester\Assert;
 use Tester\TestCase;
 
@@ -36,7 +36,7 @@ class CommandJobTest extends TestCase
 		$this->commandTester = new CommandTester(
 			new WorkerCommand(
 				new CommandJob(
-					new FileManager('')
+					new Config(['appDir' => ''])
 				)
 			)
 		);

@@ -2,7 +2,7 @@
 
 namespace Adbros\Worker\Job;
 
-use Adbros\Worker\Util\FileManager;
+use Adbros\Worker\Config\Config;
 use Nette\Utils\Strings;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidOptionException;
@@ -15,10 +15,10 @@ abstract class AbstractJob implements IJob
 
 	public const PHP_IDENT = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*';
 
-	/** @var FileManager */
+	/** @var Config */
 	private $fileManager;
 
-	public function __construct(FileManager $fileManager)
+	public function __construct(Config $fileManager)
 	{
 		$this->fileManager = $fileManager;
 	}

@@ -2,9 +2,9 @@
 
 namespace Adbros\Worker\DI;
 
+use Adbros\Worker\Config\Config;
 use Adbros\Worker\Console\Command\WorkerCommand;
 use Adbros\Worker\Job\IJob;
-use Adbros\Worker\Util\FileManager;
 use Nette\DI\CompilerExtension;
 use Symfony\Component\Console\ConsoleEvents;
 
@@ -16,7 +16,11 @@ class WorkerExtension extends CompilerExtension
 		$container = $this->getContainerBuilder();
 
 		$container->addDefinition($this->prefix('fileManager'))
-			->setFactory(FileManager::class, [$container->parameters['appDir']]);
+			->setFactory(Config::class, [
+				[
+					'appDir' => $container->parameters['appDir'],
+				],
+			]);
 
 		if (method_exists($this->compiler, 'loadDefinitionsFromConfig')) {
 			$this->compiler->loadDefinitionsFromConfig(
