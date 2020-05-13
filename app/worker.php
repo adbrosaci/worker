@@ -10,4 +10,4 @@ if (!$autoloader()) {
 	);
 }
 
-return new \Adbros\Worker\Console\WorkerApplication();
+return new Adbros\Worker\Console\WorkerApplication();

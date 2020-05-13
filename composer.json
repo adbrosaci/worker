@@ -43,14 +43,14 @@
   ],
   "scripts": {
     "cs": [
-      "parallel-lint -e php,phpt --blame src tests --exclude tests/tmp",
-      "phpcs --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --colors -nsp src tests --ignore=tests/tmp"
+      "parallel-lint -e php,phpt --blame app src tests --exclude tests/tmp",
+      "phpcs --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --colors -nsp app src tests --ignore=tests/tmp"
     ],
     "cs-fix": [
       "phpcbf --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --colors -nsp src tests --ignore=tests/tmp"
     ],
     "phpstan": [
-      "phpstan analyse -l max -c phpstan.neon src tests"
+      "phpstan analyse -l max -c phpstan.neon app src tests"
     ],
     "test": [
       "tester -C tests"
