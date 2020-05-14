@@ -13,20 +13,18 @@
   "license": "MIT",
   "require": {
     "php": ">=7.1",
+    "nette/finder": "^2.4",
     "nette/neon": "^2.4 || ^3.0",
     "nette/php-generator": "^2.4 || ^3.0",
     "nette/utils": "^2.4 || ^3.0",
     "symfony/console": "^3.3 || ^4.0 || ^5.0"
   },
   "require-dev": {
-    "nette/di": "^2.4 || ^3.0",
+    "nette/robot-loader": "^2.4 || ^3.0",
     "ninjify/coding-standard": "^0.10",
     "ninjify/nunjuck": "^0.3",
     "php-parallel-lint/php-console-highlighter": "^0.4",
     "php-parallel-lint/php-parallel-lint": "^1.2"
-  },
-  "suggest": {
-    "contributte/console": "Best minimal console (symfony/console) to Nette Framework"
   },
   "autoload": {
     "psr-4": {
@@ -56,7 +54,7 @@
       "tester -C tests"
     ],
     "coverage": [
-      "tester -p phpdbg -C --coverage coverage.xml --coverage-src src tests/cases"
+      "tester -p phpdbg -C --coverage coverage.xml --coverage-src app src tests/cases"
     ]
   }
 }

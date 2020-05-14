@@ -17,7 +17,7 @@ class ControlJob extends AbstractJob
 
 	public static function getCommandName(): string
 	{
-		return 'worker:control';
+		return 'control';
 	}
 
 	public function configureCommand(Command $command): void

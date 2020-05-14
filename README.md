@@ -16,32 +16,28 @@ composer require adbros/worker --dev
 ```
 
 ## Configuration
+Create worker.php, worker.json or worker.neon in your root directory
 
+### worker.neon example
 ```yaml
-extensions:
-    worker: Adbros\Worker\DI\WorkerExtension
+appDir: app # application root directory
 ```
-
-You should enable this extension only  in your local.neon file.
 
 ## Usage
 
 ```shell
 # Generate command for symfony/console package
-php bin/console worker:command [options] [--] [<name>]
+vendor/bin/worker command [options] [--] [<name>]
 
 # Generate control with factory and template
-php bin/console worker:control [options] [--] [<name>]
+vendor/bin/worker control [options] [--] [<name>]
 
 # Generate model for nextras/orm package
-php bin/console worker:orm [options] [--] [<entity> [<repository>]]
+vendor/bin/worker orm [options] [--] [<entity> [<repository>]]
 
 # Generate presenter and default template
-php bin/console worker:presenter [options] [--] [<name>]
+vendor/bin/worker presenter [options] [--] [<name>]
 ```
-
-## Create your own jobs
-Just create a class that implements ```Adbros\Worker\IJob``` and register it to DI container. That's it.
 
 ## Examples
 

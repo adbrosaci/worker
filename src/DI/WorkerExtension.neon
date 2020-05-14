@@ -1,5 +1,0 @@
-services:
-	- Adbros\Worker\Job\CommandJob
-	- Adbros\Worker\Job\ControlJob
-	- Adbros\Worker\Job\OrmJob
-	- Adbros\Worker\Job\PresenterJob

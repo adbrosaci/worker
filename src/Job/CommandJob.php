@@ -17,7 +17,7 @@ class CommandJob extends AbstractJob
 
 	public static function getCommandName(): string
 	{
-		return 'worker:command';
+		return 'command';
 	}
 
 	public function configureCommand(Command $command): void

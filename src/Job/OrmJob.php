@@ -17,7 +17,7 @@ class OrmJob extends AbstractJob
 
 	public static function getCommandName(): string
 	{
-		return 'worker:orm';
+		return 'orm';
 	}
 
 	public function configureCommand(Command $command): void

@@ -17,7 +17,7 @@ class PresenterJob extends AbstractJob
 
 	public static function getCommandName(): string
 	{
-		return 'worker:presenter';
+		return 'presenter';
 	}
 
 	public function configureCommand(Command $command): void
