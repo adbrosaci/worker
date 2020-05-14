@@ -54,7 +54,7 @@
       "tester -C tests"
     ],
     "coverage": [
-      "tester -p phpdbg -C --coverage coverage.xml --coverage-src app src tests/cases"
+      "tester -p phpdbg -C --coverage coverage.xml --coverage-src app --coverage-src src"
     ]
   }
 }
