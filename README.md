@@ -16,11 +16,31 @@ composer require adbros/worker --dev
 ```
 
 ## Configuration
-Create worker.php, worker.json or worker.neon in your root directory
+You can create worker.php, worker.json or worker.neon in your root directory to setup default Worker options.
 
-### worker.neon example
+### default worker.neon example
 ```yaml
-appDir: app # application root directory
+rootDirectory: app
+rootNamespace: App
+
+command:
+    namespace: App\Commands
+    parent: Symfony\Component\Console\Command\Command
+
+control:
+    namespace: App\Controls
+    controlParent: Nette\Application\UI\Control
+    factoryParent:
+
+orm:
+    namespace: App\Model\Orm
+    entityParent: Nextras\Orm\Entity\Entity
+    repositoryParent: Nextras\Orm\Repository\Repository
+    mapperParent: Nextras\Orm\Mapper\Mapper
+
+presenter:
+    namespace: App\Presenters
+    parent: Nette\Application\UI\Presenter
 ```
 
 ## Usage

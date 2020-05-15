@@ -49,7 +49,7 @@ class ControlJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('namespace'), $input->getOption('root-namespace'))) {
-			$namespace = $io->ask('Enter control namespace', $input->getOption('root-namespace') . '\\Controls\\' . $input->getArgument('name'), function (?string $answer) use ($input): string {
+			$namespace = $io->ask('Enter control namespace', $this->getConfig()['namespace'] ?? $input->getOption('root-namespace') . '\\Controls\\' . $input->getArgument('name'), function (?string $answer) use ($input): string {
 				if (!$this->isNamespace($answer, $input->getOption('root-namespace'))) {
 					throw new InvalidOptionException('Please, enter valid control namespace.');
 				}
@@ -61,7 +61,7 @@ class ControlJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('control-parent'))) {
-			$namespace = $io->ask('Enter control parent class', 'Nette\\Application\\UI\\Control', function (?string $answer): string {
+			$namespace = $io->ask('Enter control parent class', $this->getConfig()['controlParent'] ?? 'Nette\\Application\\UI\\Control', function (?string $answer): string {
 				if (!$this->isNamespace($answer)) {
 					throw new InvalidOptionException('Please, enter valid control parent class.');
 				}
@@ -73,7 +73,7 @@ class ControlJob extends AbstractJob
 		}
 
 		if ($input->getOption('factory-parent') !== '' && !$this->isNamespace($input->getOption('factory-parent'))) {
-			$namespace = $io->ask('Enter factory parent class', '', function (?string $answer): string {
+			$namespace = $io->ask('Enter factory parent class', $this->getConfig()['factoryParent'] ?? '', function (?string $answer): string {
 				if ($answer !== '' && !$this->isNamespace($answer)) {
 					throw new InvalidOptionException('Please, enter valid factory parent class.');
 				}

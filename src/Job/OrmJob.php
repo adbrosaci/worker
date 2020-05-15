@@ -63,7 +63,7 @@ class OrmJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('namespace'), $input->getOption('root-namespace'))) {
-			$namespace = $io->ask('Enter model namespace', $input->getOption('root-namespace') . '\\Model\\Orm\\' . $input->getArgument('entity'), function (?string $answer) use ($input): string {
+			$namespace = $io->ask('Enter model namespace', $this->getConfig()['namespace'] ?? $input->getOption('root-namespace') . '\\Model\\Orm\\' . $input->getArgument('entity'), function (?string $answer) use ($input): string {
 				if (!$this->isNamespace($answer, $input->getOption('root-namespace'))) {
 					throw new InvalidOptionException('Please, enter valid model namespace.');
 				}
@@ -75,7 +75,7 @@ class OrmJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('entity-parent'))) {
-			$namespace = $io->ask('Enter entity parent class', 'Nextras\\Orm\\Entity\\Entity', function (?string $answer): string {
+			$namespace = $io->ask('Enter entity parent class', $this->getConfig()['entityParent'] ?? 'Nextras\\Orm\\Entity\\Entity', function (?string $answer): string {
 				if (!$this->isNamespace($answer)) {
 					throw new InvalidOptionException('Please, enter valid entity parent class.');
 				}
@@ -87,7 +87,7 @@ class OrmJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('repository-parent'))) {
-			$namespace = $io->ask('Enter repository parent class', 'Nextras\\Orm\\Repository\\Repository', function (?string $answer): string {
+			$namespace = $io->ask('Enter repository parent class', $this->getConfig()['repositoryParent'] ?? 'Nextras\\Orm\\Repository\\Repository', function (?string $answer): string {
 				if (!$this->isNamespace($answer)) {
 					throw new InvalidOptionException('Please, enter valid repository parent class.');
 				}
@@ -99,7 +99,7 @@ class OrmJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('mapper-parent'))) {
-			$namespace = $io->ask('Enter mapper parent class', 'Nextras\\Orm\\Mapper\\Mapper', function (?string $answer): string {
+			$namespace = $io->ask('Enter mapper parent class', $this->getConfig()['mapperParent'] ?? 'Nextras\\Orm\\Mapper\\Mapper', function (?string $answer): string {
 				if (!$this->isNamespace($answer)) {
 					throw new InvalidOptionException('Please, enter valid mapper parent class.');
 				}

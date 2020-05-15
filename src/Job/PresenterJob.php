@@ -48,7 +48,7 @@ class PresenterJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('namespace'), $input->getOption('root-namespace'))) {
-			$namespace = $io->ask('Enter presenter namespace', $input->getOption('root-namespace') . '\\Presenters', function (?string $answer) use ($input): string {
+			$namespace = $io->ask('Enter presenter namespace', $this->getConfig()['namespace'] ?? $input->getOption('root-namespace') . '\\Presenters', function (?string $answer) use ($input): string {
 				if (!$this->isNamespace($answer, $input->getOption('root-namespace'))) {
 					throw new InvalidOptionException('Please, enter valid presenter namespace.');
 				}
@@ -60,7 +60,7 @@ class PresenterJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('parent'))) {
-			$namespace = $io->ask('Enter presenter parent class', 'Nette\\Application\\UI\\Presenter', function (?string $answer): string {
+			$namespace = $io->ask('Enter presenter parent class', $this->getConfig()['parent'] ?? 'Nette\\Application\\UI\\Presenter', function (?string $answer): string {
 				if (!$this->isNamespace($answer)) {
 					throw new InvalidOptionException('Please, enter valid presenter parent class.');
 				}

@@ -48,7 +48,7 @@ class CommandJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('namespace'), $input->getOption('root-namespace'))) {
-			$namespace = $io->ask('Enter command namespace', $input->getOption('root-namespace') . '\\Commands', function (?string $answer) use ($input): string {
+			$namespace = $io->ask('Enter command namespace', $this->getConfig()['namespace'] ?? $input->getOption('root-namespace') . '\\Commands', function (?string $answer) use ($input): string {
 				if (!$this->isNamespace($answer, $input->getOption('root-namespace'))) {
 					throw new InvalidOptionException('Please, enter valid command namespace.');
 				}
@@ -60,7 +60,7 @@ class CommandJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('parent'))) {
-			$namespace = $io->ask('Enter command parent class', 'Symfony\\Component\\Console\\Command\\Command', function (?string $answer): string {
+			$namespace = $io->ask('Enter command parent class', $this->getConfig()['parent'] ?? 'Symfony\\Component\\Console\\Command\\Command', function (?string $answer): string {
 				if (!$this->isNamespace($answer)) {
 					throw new InvalidOptionException('Please, enter valid command parent class.');
 				}

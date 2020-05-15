@@ -5,40 +5,38 @@ namespace Adbros\Worker\Config;
 use Nette\SmartObject;
 
 /**
- * @property string $appDir
+ * @property mixed[] $options
  */
 class Config
 {
 
 	use SmartObject;
 
-	/** @var string */
-	protected $appDir;
+	/** @var mixed[] */
+	protected $options;
 
 	/**
-	 * @param string[] $configuration
+	 * @param mixed[] $options
 	 */
-	public function __construct(array $configuration)
+	public function __construct(array $options)
 	{
-		$this->parseConfiguration($configuration);
+		$this->options = $options;
 	}
 
 	/**
-	 * @param string[] $configuration
+	 * @return mixed[]
 	 */
-	protected function parseConfiguration(array $configuration): void
+	public function getOptions(): array
 	{
-		$this->appDir = $configuration['appDir'] ?? '';
+		return $this->options;
 	}
 
-	public function getAppDir(): string
+	/**
+	 * @param mixed[] $options
+	 */
+	public function setOptions(array $options): void
 	{
-		return $this->appDir;
-	}
-
-	public function setAppDir(string $appDir): void
-	{
-		$this->appDir = $appDir;
+		$this->options = $options;
 	}
 
 }

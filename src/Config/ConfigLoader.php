@@ -18,6 +18,10 @@ class ConfigLoader
 	{
 		$configFilePath = self::locateConfigFile($directory);
 
+		if ($configFilePath === null) {
+			return [];
+		}
+
 		$extension = pathinfo($configFilePath, PATHINFO_EXTENSION);
 
 		switch (strtolower($extension)) {
@@ -30,7 +34,7 @@ class ConfigLoader
 		}
 	}
 
-	protected static function locateConfigFile(string $directory): string
+	protected static function locateConfigFile(string $directory): ?string
 	{
 		$configFiles = Finder::findFiles('worker.php', 'worker.json', 'worker.neon')->in($directory);
 
@@ -39,7 +43,7 @@ class ConfigLoader
 			return $configFile->getPathname();
 		}
 
-		throw new RuntimeException('Configuration file not found.');
+		return null;
 	}
 
 	/**
