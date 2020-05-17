@@ -6,7 +6,7 @@ namespace My\App\My\Controls\Test;
 
 use My\App\My\Controls\BaseFactory;
 
-class TestControl extends BaseFactory
+class TestFactory extends BaseFactory
 {
 	public function create(): TestControl
 	{

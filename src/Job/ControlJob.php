@@ -130,7 +130,7 @@ class ControlJob extends AbstractJob
 		}
 
 		$class = $namespace
-			->addClass($input->getArgument('name') . 'Control');
+			->addClass($input->getArgument('name') . 'Factory');
 
 		if ($input->getOption('factory-parent') !== '') {
 			$class
