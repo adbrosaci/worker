@@ -49,7 +49,7 @@ class ControlJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('namespace'), $input->getOption('root-namespace'))) {
-			$namespace = $io->ask('Enter control namespace', $this->getConfig()['namespace'] ?? $input->getOption('root-namespace') . '\\Controls\\' . $input->getArgument('name'), function (?string $answer) use ($input): string {
+			$namespace = $io->ask('Enter control namespace', ($this->getConfig()['namespace'] ?? $input->getOption('root-namespace') . '\\Controls') . '\\' . $input->getArgument('name'), function (?string $answer) use ($input): string {
 				if (!$this->isNamespace($answer, $input->getOption('root-namespace'))) {
 					throw new InvalidOptionException('Please, enter valid control namespace.');
 				}

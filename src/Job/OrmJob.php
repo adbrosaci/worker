@@ -63,7 +63,7 @@ class OrmJob extends AbstractJob
 		}
 
 		if (!$this->isNamespace($input->getOption('namespace'), $input->getOption('root-namespace'))) {
-			$namespace = $io->ask('Enter model namespace', $this->getConfig()['namespace'] ?? $input->getOption('root-namespace') . '\\Model\\Orm\\' . $input->getArgument('entity'), function (?string $answer) use ($input): string {
+			$namespace = $io->ask('Enter model namespace', ($this->getConfig()['namespace'] ?? $input->getOption('root-namespace') . '\\Model\\Orm') . '\\' . $input->getArgument('entity'), function (?string $answer) use ($input): string {
 				if (!$this->isNamespace($answer, $input->getOption('root-namespace'))) {
 					throw new InvalidOptionException('Please, enter valid model namespace.');
 				}
