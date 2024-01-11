@@ -15,11 +15,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class PresenterJob extends AbstractJob
 {
 
-	public static function getCommandName(): string
-	{
-		return 'presenter';
-	}
-
 	public function configureCommand(Command $command): void
 	{
 		parent::configureCommand($command);
@@ -122,6 +117,11 @@ class PresenterJob extends AbstractJob
 		$io->success('Done.');
 
 		return 0;
+	}
+
+	public static function getCommandName(): string
+	{
+		return 'presenter';
 	}
 
 }

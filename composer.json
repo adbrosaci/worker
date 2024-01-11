@@ -12,18 +12,17 @@
   "type": "library",
   "license": "MIT",
   "require": {
-    "php": ">=7.1",
-    "nette/finder": "^2.4",
+    "php": ">=7.4",
+    "nette/finder": "^2.4 || ^3.0",
     "nette/neon": "^2.4 || ^3.0",
-    "nette/php-generator": "^2.4 || ^3.0",
-    "nette/utils": "^2.4 || ^3.0",
-    "symfony/console": "^3.3 || ^4.0 || ^5.0"
+    "nette/php-generator": "^2.4 || ^3.0 || ^4.0",
+    "nette/utils": "^2.4 || ^3.0 || ^4.0",
+    "symfony/console": "^3.3 || ^4.0 || ^5.0 || ^6.0"
   },
   "require-dev": {
-    "nette/robot-loader": "^2.4 || ^3.0",
-    "ninjify/coding-standard": "^0.10",
+    "contributte/qa": "^0.2.0",
     "ninjify/nunjuck": "^0.3",
-    "php-parallel-lint/php-console-highlighter": "^0.4",
+    "php-parallel-lint/php-console-highlighter": "^1.0",
     "php-parallel-lint/php-parallel-lint": "^1.2"
   },
   "autoload": {
@@ -47,14 +46,17 @@
     "cs-fix": [
       "phpcbf --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --colors -nsp src tests --ignore=tests/tmp"
     ],
-    "phpstan": [
-      "phpstan analyse -l max -c phpstan.neon app src tests"
-    ],
     "test": [
       "tester -C tests"
     ],
     "coverage": [
       "tester -p phpdbg -C --coverage coverage.xml --coverage-src app --coverage-src src"
     ]
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "sort-packages": true
   }
 }

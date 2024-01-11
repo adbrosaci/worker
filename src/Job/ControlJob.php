@@ -15,11 +15,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ControlJob extends AbstractJob
 {
 
-	public static function getCommandName(): string
-	{
-		return 'control';
-	}
-
 	public function configureCommand(Command $command): void
 	{
 		parent::configureCommand($command);
@@ -150,6 +145,11 @@ class ControlJob extends AbstractJob
 		$io->text(sprintf('File %s created.', $filename));
 
 		return 0;
+	}
+
+	public static function getCommandName(): string
+	{
+		return 'control';
 	}
 
 }

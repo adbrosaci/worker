@@ -18,10 +18,9 @@ class PresenterJobTest extends TestCase
 {
 
 	/** @var string[] */
-	protected $inputs;
+	protected array $inputs;
 
-	/** @var CommandTester */
-	protected $commandTester;
+	protected CommandTester $commandTester;
 
 	public function setUp(): void
 	{

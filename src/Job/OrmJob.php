@@ -15,11 +15,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class OrmJob extends AbstractJob
 {
 
-	public static function getCommandName(): string
-	{
-		return 'orm';
-	}
-
 	public function configureCommand(Command $command): void
 	{
 		parent::configureCommand($command);
@@ -179,6 +174,11 @@ class OrmJob extends AbstractJob
 		$io->success('Done.');
 
 		return 0;
+	}
+
+	public static function getCommandName(): string
+	{
+		return 'orm';
 	}
 
 }

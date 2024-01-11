@@ -15,11 +15,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CommandJob extends AbstractJob
 {
 
-	public static function getCommandName(): string
-	{
-		return 'command';
-	}
-
 	public function configureCommand(Command $command): void
 	{
 		parent::configureCommand($command);
@@ -128,6 +123,11 @@ class CommandJob extends AbstractJob
 		$io->success('Done.');
 
 		return 0;
+	}
+
+	public static function getCommandName(): string
+	{
+		return 'command';
 	}
 
 }

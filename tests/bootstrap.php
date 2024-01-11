@@ -1,6 +1,5 @@
 <?php declare(strict_types = 1);
 
-use Nette\Loaders\RobotLoader;
 use Nette\Utils\Random;
 use Ninjify\Nunjuck\Environment;
 use Tester\Helpers;
@@ -18,11 +17,6 @@ Environment::setupVariables(__DIR__);
 
 // Fill global variables
 Environment::setupGlobalVariables();
-
-// Register robot loader
-Environment::setupRobotLoader(function (RobotLoader $robotLoader): void {
-	$robotLoader->setAutoRefresh(true);
-});
 
 define('OUTPUT_DIR', sys_get_temp_dir() . '/' . Random::generate());
 Helpers::purge(OUTPUT_DIR);

@@ -11,11 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class WorkerCommand extends Command
 {
 
-	/** @var IJob */
-	private $job;
+	private IJob $job;
 
-	/** @var ConsoleStyle */
-	private $io;
+	private ConsoleStyle $io;
 
 	public function __construct(IJob $job)
 	{

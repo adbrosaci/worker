@@ -15,8 +15,7 @@ abstract class AbstractJob implements IJob
 
 	public const PHP_IDENT = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*';
 
-	/** @var Config */
-	private $config;
+	private Config $config;
 
 	public function __construct(Config $config)
 	{

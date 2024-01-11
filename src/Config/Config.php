@@ -13,7 +13,7 @@ class Config
 	use SmartObject;
 
 	/** @var mixed[] */
-	protected $options;
+	protected array $options;
 
 	/**
 	 * @param mixed[] $options

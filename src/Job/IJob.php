@@ -10,11 +10,6 @@ interface IJob
 {
 
 	/**
-	 * Return the command name for your maker (e.g. make:report).
-	 */
-	public static function getCommandName(): string;
-
-	/**
 	 * Configure the command: set description, input arguments, options, etc.
 	 *
 	 * By default, all arguments will be asked interactively. If you want
@@ -31,5 +26,10 @@ interface IJob
 	 * Called after normal code generation: allows you to do anything.
 	 */
 	public function generate(InputInterface $input, SymfonyStyle $io): int;
+
+	/**
+	 * Return the command name for your maker (e.g. make:report).
+	 */
+	public static function getCommandName(): string;
 
 }

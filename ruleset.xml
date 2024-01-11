@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="Worker">
     <!-- Contributte Coding Standard -->
-    <rule ref="./vendor/ninjify/coding-standard/contributte.xml">
+    <rule ref="./vendor/contributte/qa/ruleset-7.4.xml">
         <exclude name="SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed"/>
     </rule>
     <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">

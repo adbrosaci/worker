@@ -9,8 +9,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 class CommandTester
 {
 
-	/** @var Command */
-	private $command;
+	private Command $command;
 
 	public function __construct(Command $command)
 	{
