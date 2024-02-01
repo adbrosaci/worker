@@ -148,7 +148,7 @@ class OrmJob extends AbstractJob
 			->addMethod('getEntityClassNames')
 			->setStatic(true)
 			->setReturnType('array')
-			->addComment('@return string[]')
+			->addComment('@inheritDoc')
 			->setBody('return [' . $input->getArgument('entity') . '::class];');
 
 		file_put_contents(($filename = $directory . '/' . $input->getArgument('repository') . 'Repository.php'), (string) $file);

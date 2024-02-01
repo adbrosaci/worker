@@ -9,7 +9,7 @@ use My\App\My\Model\Orm\BaseRepository;
 class TestsRepository extends BaseRepository
 {
 	/**
-	 * @return string[]
+	 * @inheritDoc
 	 */
 	public static function getEntityClassNames(): array
 	{
